@@ -9,11 +9,14 @@ const fetch = require('node-fetch');
 const urlencode = require("urlencode");
 const axios = require("axios");
 const menu = require("./lib/menu.js");
-const tambahan = require("./lib/tambahan.js")
 const donasi = require("./lib/donasi.js");
 const info = require("./lib/info.js");
-/////////////////
-const BotName = 'LnkyNet BOT🌴'; 
+
+const BotName = 'TLN-BOT'; 
+const instagram = 'https://instagram.com/dvarvian'; 
+const telegram = 'https://t.me/gwegois'; 
+const kapanbotaktif = '24 JAM'; 
+const youtube = 'https://www.youtube.com/c/HIBURANDIPA';
 const
 {
    WAConnection,
@@ -48,20 +51,17 @@ conn.on('qr', qr =>
 
 conn.on('credentials-updated', () =>
 {
-   // save credentials whenever updated
    console.log(`credentials updated!`)
-   const authInfo = conn.base64EncodedAuthInfo() // get all the auth info we need to restore this session
-   fs.writeFileSync('./session.json', JSON.stringify(authInfo, null, '\t')) // save this info to a file
+   const authInfo = conn.base64EncodedAuthInfo()
+   fs.writeFileSync('./session.json', JSON.stringify(authInfo, null, '\t'))
 })
 fs.existsSync('./session.json') && conn.loadAuthInfo('./session.json')
-// uncomment the following line to proxy the connection; some random proxy I got off of: https://proxyscrape.com/free-proxy-list
-//conn.connectOptions.agent = ProxyAgent ('http://1.0.180.120:8080')
 conn.connect();
 
-conn.on('user-presence-update', json => console.log(json.id + ' presence is => ' + json.type)) || console.log('Bot by ig:@mwmaulana310')
+conn.on('user-presence-update', json => console.log(json.id + ' presence is => ' + json.type)) || console.log('Bot by UPLUK')
 conn.on('message-status-update', json =>
 {
-   const participant = json.participant ? ' (' + json.participant + ')' : '' // participant exists when the message is from a group
+   const participant = json.participant ? ' (' + json.participant + ')' : ''
    console.log(`[ ${moment().format("HH:mm:ss")} ] => bot by ig:@mwmaulana310`)
 })
 
@@ -74,11 +74,7 @@ conn.on('message-new', async(m) =>
    let imageMessage = m.message.imageMessage;
    console.log(`[ ${moment().format("HH:mm:ss")} ] => Nomor: [ ${id.split("@s.whatsapp.net")[0]} ] => ${text}`);
 
-
-// Groups
-
-if (text.includes("!buatgrup"))
-   {
+if (text.includes("!buatgrup")){
 var nama = text.split("!buatgrup")[1].split("-nomor")[0];
 var nom = text.split("-nomor")[1];
 var numArray = nom.split(",");
@@ -91,87 +87,6 @@ const group = await conn.groupCreate (nama, str)
 console.log ("Grup telah dibuat dengan id: " + group.gid)
 conn.sendMessage(group.gid, "Halo semua!!!", MessageType.extendedText) // say hello to everyone on the group
 
-}
-//chat
-if (text == 'halo')
-{
-conn.sendMessage(id, tambahan.halo ,MessageType.text);
-}
-else if (text == 'hai')
-{
-conn.sendMessage(id, tambahan.hai ,MessageType.text);
-}
-else if (text == 'assalamualaikum')
-{
-conn.sendMessage(id, tambahan.ass ,MessageType.text);
-}
-else if (text == 'bro')
-{
-conn.sendMessage(id, tambahan.bro ,MessageType.text);
-}
-else if (text == 'p')
-{
-conn.sendMessage(id, tambahan.p ,MessageType.text);
-}
-else if (text == 'test')
-{
-  conn.sendMessage(id, tambahan.test, MessageType.text);
-}
-else if (text == 'HALO')
-{
-conn.sendMessage(id, tambahan.halo ,MessageType.text);
-}
-else if (text == 'Halo')
-{
-conn.sendMessage(id, tambahan.halo ,MessageType.text);
-}
-else if (text == 'Hai')
-{
-conn.sendMessage(id, tambahan.hai ,MessageType.text);
-}
-else if (text == 'Assalamualaikum')
-{
-conn.sendMessage(id, tambahan.ass ,MessageType.text);
-}
-else if (text == 'Bro')
-{
-conn.sendMessage(id, tambahan.bro ,MessageType.text);
-}
-else if (text == 'P')
-{
-conn.sendMessage(id, tambahan.p ,MessageType.text);
-}
-else if (text == 'Test')
-{
-  conn.sendMessage(id, tambahan.test, MessageType.text);
-}
-else if (text == 'HAI')
-{
-conn.sendMessage(id, tambahan.hai ,MessageType.text);
-}
-else if (text == 'ASSALAMUALAIKUM')
-{
-conn.sendMessage(id, tambahan.ass ,MessageType.text);
-}
-else if (text == 'BRO')
-{
-conn.sendMessage(id, tambahan.bro ,MessageType.text);
-}
-else if (text == 'TEST')
-{
-  conn.sendMessage(id, tambahan.test, MessageType.text);
-}
-// Fitur
-if(text.includes("!cek")){
-var num = text.replace(/!cek/ , "")
-var idn = num.replace("0","+62");
-
-console.log(id);
-const gg = idn
-
-const exists = await conn.isOnWhatsApp (gg)
-console.log(exists);
-conn.sendMessage(id ,`nomor hp ${gg} ${exists ? " tersedia " : " tidak tersedia"} di whatsapp`, MessageType.text)
 }
 
 if (text.includes("!say")){
@@ -227,13 +142,6 @@ axios.get(`https://mhankbarbar.herokuapp.com/api/twit?url=${teks}&apiKey=zFuV88p
 })
 }
 
-if (text.includes("!wiki")){
-const teks = text.replace(/!wiki /, "")
-axios.get(`https://st4rz.herokuapp.com/api/wiki?q=${text}`).then((res) => {
-    let hasil = `[LnkyBOT🌴]Menurut Wikipedia :\n\n${res.data.result}`;
-    conn.sendMessage(id, hasil ,MessageType.text);
-})
-}
 if (text.includes("!sholat")){
   const teks = text.replace(/!sholat /, "")
   axios.get(`https://mhankbarbar.herokuapp.com/api/jadwalshalat?daerah=${teks}&apiKey=zFuV88pxcIiCWuYlwg57`).then ((res) =>{
@@ -241,8 +149,43 @@ if (text.includes("!sholat")){
   conn.sendMessage(id, hasil, MessageType.text);
 })
 }
-if (text == '!menu'){
 
+if (text == '!menu'){
+const corohelp = await get.get('https://covid19.mathdro.id/api/countries/id').json()
+var date = new Date();
+var tahun = date.getFullYear();
+var bulan = date.getMonth();
+var tanggal = date.getDate();
+var hari = date.getDay();
+var jam = date.getHours();
+var menit = date.getMinutes();
+var detik = date.getSeconds();
+switch(hari) {
+ case 0: hari = "Minggu"; break;
+ case 1: hari = "Senin"; break;
+ case 2: hari = "Selasa"; break;
+ case 3: hari = "Rabu"; break;
+ case 4: hari = "Kamis"; break;
+ case 5: hari = "Jum'at"; break;
+ case 6: hari = "Sabtu"; break;
+}
+switch(bulan) {
+ case 0: bulan = "Januari"; break;
+ case 1: bulan = "Februari"; break;
+ case 2: bulan = "Maret"; break;
+ case 3: bulan = "April"; break;
+ case 4: bulan = "Mei"; break;
+ case 5: bulan = "Juni"; break;
+ case 6: bulan = "Juli"; break;
+ case 7: bulan = "Agustus"; break;
+ case 8: bulan = "September"; break;
+ case 9: bulan = "Oktober"; break;
+ case 10: bulan = "November"; break;
+ case 11: bulan = "Desember"; break;
+}
+var tampilTanggal = "TANGGAL: " + hari + ", " + tanggal + " " + bulan + " " + tahun;
+var tampilWaktu = "JAM: " + jam + ":" + menit + ":" + detik;
+conn.sendMessage(id, menu.menu(id, BotName, corohelp, tampilTanggal, tampilWaktu, instagram, telegram, youtube, kapanbotaktif) ,MessageType.text);
 }
 else if (text == '!quran'){
 axios.get('https://api.banghasan.com/quran/format/json/acak').then((res) => {
@@ -254,7 +197,42 @@ axios.get('https://api.banghasan.com/quran/format/json/acak').then((res) => {
 })
 }
 
-
+else if (text == '!donasi'){
+const corohelp = await get.get('https://covid19.mathdro.id/api/countries/id').json()
+var date = new Date();
+var tahun = date.getFullYear();
+var bulan = date.getMonth();
+var tanggal = date.getDate();
+var hari = date.getDay();
+var jam = date.getHours();
+var menit = date.getMinutes();
+var detik = date.getSeconds();
+switch(hari) {
+ case 0: hari = "Minggu"; break;
+ case 1: hari = "Senin"; break;
+ case 2: hari = "Selasa"; break;
+ case 3: hari = "Rabu"; break;
+ case 4: hari = "Kamis"; break;
+ case 5: hari = "Jum'at"; break;
+ case 6: hari = "Sabtu"; break;
+}
+switch(bulan) {
+ case 0: bulan = "Januari"; break;
+ case 1: bulan = "Februari"; break;
+ case 2: bulan = "Maret"; break;
+ case 3: bulan = "April"; break;
+ case 4: bulan = "Mei"; break;
+ case 5: bulan = "Juni"; break;
+ case 6: bulan = "Juli"; break;
+ case 7: bulan = "Agustus"; break;
+ case 8: bulan = "September"; break;
+ case 9: bulan = "Oktober"; break;
+ case 10: bulan = "November"; break;
+ case 11: bulan = "Desember"; break;
+}
+var tampilTanggal = "TANGGAL: " + hari + ", " + tanggal + " " + bulan + " " + tahun;
+var tampilWaktu = "JAM: " + jam + ":" + menit + ":" + detik;
+conn.sendMessage(id, donasi.donasi(id, BotName, corohelp, tampilTanggal, tampilWaktu, instagram, telegram, youtube, kapanbotaktif) ,MessageType.text);
 }
 else if (text == '!info'){
 const corohelp = await get.get('https://covid19.mathdro.id/api/countries/id').json()
@@ -294,7 +272,7 @@ var tampilWaktu = "JAM: " + jam + ":" + menit + ":" + detik;
 conn.sendMessage(id, info.info(id, BotName, corohelp, tampilTanggal, tampilWaktu, instagram, telegram, youtube, kapanbotaktif) ,MessageType.text);
 }
 else if (text == '!pict'){
-conn.sendMessage(id, 'ulangi dengan  !pict cewek/cowok\n\nMisal: !pict cowok' ,MessageType.text);
+conn.sendMessage(id, '*Masukkan cowok/cewek*' ,MessageType.text);
 }
    if (messageType == 'imageMessage')
    {
@@ -321,7 +299,6 @@ conn.sendMessage(id, 'ulangi dengan  !pict cewek/cowok\n\nMisal: !pict cowok' ,M
 
       if (is == '!pantun')
       {
-
          fetch('https://raw.githubusercontent.com/pajaar/grabbed-results/master/pajaar-2020-pantun-pakboy.txt')
             .then(res => res.text())
             .then(body =>
@@ -337,7 +314,7 @@ conn.sendMessage(id, 'ulangi dengan  !pict cewek/cowok\n\nMisal: !pict cowok' ,M
       if (text.includes("!covid"))
    {
 const get = require('got')
-    const body = await get.post('https://api.kawalcorona.com/indonesia', {
+const body = await get.post('https://api.kawalcorona.com/indonesia', {
 
     }).json();
     var positif = (body[0]['positif']);
@@ -345,7 +322,11 @@ const get = require('got')
     var meninggal = (body[0]['meninggal']);
     var dirawat = (body[0]['dirawat']);
     console.log(body[0]['name'])
-    conn.sendMessage(id,`😭🤒DATA WABAH COVID-19 TERBARU DI INDONESIA😔😊\n\n😔Positif ==> ${positif} \n😊Sembuh ==> ${sembuh} \n😭Meninggal ==> ${meninggal}\n🤒Dirawat ==> ${dirawat}`, MessageType.text);
+    conn.sendMessage(id,`*DATA COVID-19 INDONESIA*
+[❗] *Positif ==> ${positif}*
+[💚] *Sembuh ==> ${sembuh}*
+[❌] *Meninggal ==> ${meninggal}*
+[❗] *Dirawat ==> ${dirawat}*`, MessageType.text);
 }
    if (text.includes("!quotes"))
    {
@@ -356,11 +337,9 @@ const get = require('got')
             let $ = cheerio.load(result.data);
             var author = $('a[class="auteurfbnaam"]').contents().first().text();
             var kata = $('q[class="fbquote"]').contents().first().text();
-
             conn.sendMessage(
                id,
-               `
-      Quotes untuk 
+               `Quotes untuk 
 *${id.split("@s.whatsapp.net")[0]}*
      _${kata}_
         
@@ -371,6 +350,7 @@ const get = require('got')
 
          });
    }
+   
    else if (text.includes("!nama ")) 
   {
     const cheerio = require('cheerio');
@@ -433,7 +413,7 @@ const get = require('got')
     `, MessageType.text);
   });
   }
-   if (text.includes("!cecan"))
+   if (text.includes("!pict cewek"))
    {
     var items = ["ullzang girl", "cewe cantik", "hijab cantik", "korean girl", "remaja cantik", "cewek korea", "cewek jepang"];
     var cewe = items[Math.floor(Math.random() * items.length)];
@@ -462,7 +442,7 @@ const get = require('got')
     });
     }
 
-   if (text.includes("!cogan"))
+   if (text.includes("!pict cowok"))
    {
     var items = ["cowo ganteng", "cogan", "korean boy", "chinese boy", "japan boy", "cowok indo ganteng", "cowok korea"];
     var cowo = items[Math.floor(Math.random() * items.length)];
@@ -491,7 +471,7 @@ const get = require('got')
     });
     }
 
-if (text.includes("!animehh"))
+if (text.includes("!animepict"))
    {
     var items = ["anime girl", "anime cantik", "anime", "anime aesthetic", "anime hd", "gambar anime hd"];
     var nime = items[Math.floor(Math.random() * items.length)];
@@ -526,11 +506,6 @@ if (text.includes("!animehh"))
   text1 = suara;
   var suara = text.replace(/#ttsid/g, text1);
   var filepath = 'mp3/bacot.wav';
-  
-  
-/*
- * save audio file
- */
 
 gtts.save(filepath, suara, function() {
   console.log(`${filepath} MP3 SAVED!`)
@@ -549,28 +524,16 @@ const buffer = fs.readFileSync(filepath)
 if (text.includes("!lirik")){
 	const teks = text.split("!lirik")[1]
 	axios.get(`http://scrap.terhambar.com/lirik?word=${teks}`).then ((res) => {
-	 	let hasil = `[LnkyNET BOT🌴] Lyrics ${teks} Adalah\n\n\n ${res.data.result.lirik}`
+	 	let hasil = `LIRIK DARI LAGU ${teks} ADALAH\n\n\n ${res.data.result.lirik}`
 	conn.sendMessage(id, hasil, MessageType.text)
 	})
 }
-if (text.includes("!alayy")){
+
+if (text.includes("!alay")){
 	const alay = text.split("!alay")[1]
 	axios.get(`https://api.terhambar.com/bpk?kata=${alay}`).then ((res) =>
 		{ let hasil = `${res.data.text}`
 		conn.sendMessage(id, hasil, MessageType.text)
 	})
 }
-
-
-
-
-
-
-
-
-
-
-//AKHIRNYAAAAAAAA
-
-
 })
